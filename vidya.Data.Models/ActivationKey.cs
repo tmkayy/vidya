@@ -22,5 +22,7 @@ namespace vidya.Data.Models
 
         [Required]
         public Game Game { get; set; } = null!;
+
+        public ICollection<LocationsKeys> Locations { get; set; } = new HashSet<LocationsKeys>();
     }
 }
