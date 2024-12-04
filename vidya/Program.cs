@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using vidya.Data;
+using vidya.Data.Models;
+using vidya.Data.Seeder;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,11 +12,19 @@ builder.Services.AddDbContext<VidyaDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+    .AddEntityFrameworkStores<VidyaDbContext>()
+    .AddDefaultTokenProviders();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+using (var scope=app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<VidyaDbContext>();
+    dbContext.Database.Migrate();
+    await new VidyaDbSeeder().SeedAsync(dbContext, scope.ServiceProvider);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -35,9 +45,6 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-app.MapRazorPages();
+app.MapDefaultControllerRoute();
 
 app.Run();
