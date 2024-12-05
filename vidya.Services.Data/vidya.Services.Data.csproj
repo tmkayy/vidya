@@ -6,4 +6,11 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\vidya.Data.Models\vidya.Data.Models.csproj" />
+    <ProjectReference Include="..\vidya.Data\vidya.Data.csproj" />
+    <ProjectReference Include="..\vidya.Services.Mapping\vidya.Services.Mapping.csproj" />
+    <ProjectReference Include="..\vidya.Web.DTOs\vidya.Web.DTOs.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using vidya.Data.Models;
 using vidya.Data.Repositories;
+using vidya.Services.Mapping;
 using vidya.Web.DTOs.Games;
 
 namespace vidya.Services.Data.Games
@@ -22,7 +23,9 @@ namespace vidya.Services.Data.Games
         public async Task<IEnumerable<GameDTO>> GetGamesAsync(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
-                return await _gameRepository.AllAsNoTracking().ToListAsync();
+                return await _gameRepository.AllAsNoTracking().To<GameDTO>().ToListAsync();
+            return await _gameRepository.AllAsNoTracking()
+                .Where(g => g.Name.Contains(name, StringComparison.InvariantCultureIgnoreCase)).To<GameDTO>().ToListAsync();
         }
     }
 }

@@ -4,6 +4,7 @@ using vidya.Data;
 using vidya.Data.Models;
 using vidya.Data.Repositories;
 using vidya.Data.Seeder;
+using vidya.Services.Data.Games;
 using vidya.Services.Mapping;
 using vidya.Web.DTOs.Games;
 
@@ -19,6 +20,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(opt => opt.SignIn.RequireCo
     .AddEntityFrameworkStores<VidyaDbContext>()
     .AddDefaultTokenProviders();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+builder.Services.AddScoped<IGameService>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 

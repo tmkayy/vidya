@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vidya.Services.Data", "..\v
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vidya.Web.DTOs", "..\vidya.Web.DTOs\vidya.Web.DTOs.csproj", "{C6C9AF53-BF03-420B-BD9A-F33E4E2DECDB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vidya.Services.Mapping", "..\vidya.Services.Mapping\vidya.Services.Mapping.csproj", "{2E735F34-663B-4C52-BA91-BF5CF04BD953}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{C6C9AF53-BF03-420B-BD9A-F33E4E2DECDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6C9AF53-BF03-420B-BD9A-F33E4E2DECDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6C9AF53-BF03-420B-BD9A-F33E4E2DECDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E735F34-663B-4C52-BA91-BF5CF04BD953}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E735F34-663B-4C52-BA91-BF5CF04BD953}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E735F34-663B-4C52-BA91-BF5CF04BD953}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E735F34-663B-4C52-BA91-BF5CF04BD953}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
