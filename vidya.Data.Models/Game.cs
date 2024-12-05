@@ -23,6 +23,9 @@ namespace vidya.Data.Models
 
         public ICollection<ActivationKey> ActivationKeys { get; set; } = new HashSet<ActivationKey>();
 
+        [Required]
+        public decimal Price { get; set; }
+
         [ForeignKey(nameof(Discount))]
         public int? DiscountId {  get; set; }
 
