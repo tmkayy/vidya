@@ -4,6 +4,8 @@ using vidya.Data;
 using vidya.Data.Models;
 using vidya.Data.Repositories;
 using vidya.Data.Seeder;
+using vidya.Services.Mapping;
+using vidya.Web.DTOs.Games;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +29,8 @@ using (var scope = app.Services.CreateScope())
     var dbContext = scope.ServiceProvider.GetRequiredService<VidyaDbContext>();
     await new VidyaDbSeeder().SeedAsync(dbContext, scope.ServiceProvider);
 }
+
+AutoMapperConfig.RegisterMappings(typeof(GameDTO).Assembly);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
