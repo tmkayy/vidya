@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using vidya.Data;
 using vidya.Data.Models;
+using vidya.Data.Repositories;
 using vidya.Data.Seeder;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<ApplicationUser>(opt => opt.SignIn.RequireConfirmedEmail = false)
     .AddEntityFrameworkStores<VidyaDbContext>()
     .AddDefaultTokenProviders();
+builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
