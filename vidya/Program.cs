@@ -12,17 +12,17 @@ builder.Services.AddDbContext<VidyaDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+builder.Services.AddDefaultIdentity<ApplicationUser>(opt => opt.SignIn.RequireConfirmedEmail = false)
     .AddEntityFrameworkStores<VidyaDbContext>()
     .AddDefaultTokenProviders();
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
-using (var scope=app.Services.CreateScope())
+using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<VidyaDbContext>();
-    dbContext.Database.Migrate();
     await new VidyaDbSeeder().SeedAsync(dbContext, scope.ServiceProvider);
 }
 
@@ -45,6 +45,10 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapDefaultControllerRoute();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapRazorPages();
 
 app.Run();
