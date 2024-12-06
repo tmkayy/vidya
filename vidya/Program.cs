@@ -20,7 +20,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(opt => opt.SignIn.RequireCo
     .AddEntityFrameworkStores<VidyaDbContext>()
     .AddDefaultTokenProviders();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
-builder.Services.AddScoped<IGameService>();
+builder.Services.AddScoped<IGameService, GameService>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
