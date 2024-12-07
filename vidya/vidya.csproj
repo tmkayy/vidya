@@ -26,6 +26,7 @@
     <ProjectReference Include="..\vidya.Data\vidya.Data.csproj" />
     <ProjectReference Include="..\vidya.Services.Mapping\vidya.Services.Mapping.csproj" />
 	  <ProjectReference Include="..\vidya.Services.Data\vidya.Services.Data.csproj" />
+	  <ProjectReference Include="..\vidya.ThirdParty.Services\vidya.ThirdParty.Services.csproj" />
     <ProjectReference Include="..\vidya.Web.DTOs\vidya.Web.DTOs.csproj" />
   </ItemGroup>
 

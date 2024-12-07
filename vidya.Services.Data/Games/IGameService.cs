@@ -11,5 +11,6 @@ namespace vidya.Services.Data.Games
     {
         Task<IEnumerable<GameDTO>> GetGamesAsync(string name = "");
 
+        Task AddGameAsync(AddGameDTO addGameDTO);
     }
 }

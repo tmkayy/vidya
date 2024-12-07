@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using vidya.Services.Data.Games;
+using vidya.Web.DTOs.Games;
 
 namespace vidya.Controllers
 {
@@ -16,6 +17,20 @@ namespace vidya.Controllers
         {
             ViewData["name"] = name;
             return View(await _gameService.GetGamesAsync(name));
+        }
+
+        public IActionResult Add()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(AddGameDTO addGameDTO)
+        {
+            if (!ModelState.IsValid)
+                return View(addGameDTO);
+            await _gameService.AddGameAsync(addGameDTO);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
