@@ -25,7 +25,7 @@ namespace vidya.Services.Data.Games
             if (string.IsNullOrWhiteSpace(name))
                 return await _gameRepository.AllAsNoTracking().To<GameDTO>().ToListAsync();
             return await _gameRepository.AllAsNoTracking()
-                .Where(g => g.Name.Contains(name, StringComparison.InvariantCultureIgnoreCase)).To<GameDTO>().ToListAsync();
+                .Where(g => EF.Functions.Like(g.Name, $"%{name}%")).To<GameDTO>().ToListAsync();
         }
     }
 }

@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using vidya.Data.Models;
+using vidya.Services.Mapping;
 
 namespace vidya.Web.DTOs.Games
 {
-    public class GameDTO
+    public class GameDTO: IMapFrom<Game>
     {
         public int Id { get; set; }
 

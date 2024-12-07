@@ -9,7 +9,7 @@ namespace vidya.Services.Data.Games
 {
     public interface IGameService
     {
-        Task<IEnumerable<GameDTO>> GetGamesAsync(string name);
+        Task<IEnumerable<GameDTO>> GetGamesAsync(string name = "");
 
     }
 }
