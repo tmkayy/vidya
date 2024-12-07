@@ -18,6 +18,7 @@ builder.Services.AddDbContext<VidyaDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(opt => opt.SignIn.RequireConfirmedEmail = false)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<VidyaDbContext>()
     .AddDefaultTokenProviders();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));

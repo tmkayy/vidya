@@ -17,6 +17,7 @@ namespace vidya.Data.Seeder
             var seeders = new List<ISeeder>
             {
                 new LocationSeeder(),
+                new RoleSeeder(),
                 new ApplicationUserSeeder(),
                 new GameSeeder(),
                 new ActivationKeySeeder(),

@@ -12,7 +12,7 @@ namespace vidya.Data.Seeder.Fakers
     {
         public ApplicationUserFaker()
         {
-            RuleFor(au => au.UserName, f => f.Person.UserName);
+            RuleFor(au => au.UserName, f => f.Person.Email);
             RuleFor(au => au.Email, f => f.Person.Email);
             RuleFor(au => au.PhoneNumber, f => f.Person.Phone);
         }
