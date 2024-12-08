@@ -1,5 +1,7 @@
 ﻿@using vidya.Web.DTOs.Games
+@inject vidya.Services.Data.Discounts.IDiscountService DiscountService
 @model IEnumerable<GameDTO>
+
 <div class="container mt-4">
     <div class="row justify-content-center">
         <div class="col-md-6">
@@ -10,7 +12,6 @@
         </div>
     </div>
 
-
     <div class="row mt-4">
         @foreach (var game in Model)
         {
@@ -19,12 +20,29 @@
                     <img src="@game.ImageUrl" class="card-img-top" alt="@game.Name" style="height: 200px; object-fit: cover;">
                     <div class="card-body">
                         <h5 class="card-title">@game.Name</h5>
-                        @if (game.DiscountPercentage is not null && game.DiscountPercentage != 0)
+
+                        @if (game.DiscountPercentage is not null && game.DiscountPercentage > 0)
                         {
-                            <p class="card-text">-@game.DiscountPercentage</p>
+                            <h6 class="card-subtitle mb-2 mt-2">
+                                <span class="text-muted text-decoration-line-through">
+                                    $@game.Price.ToString("0.00")
+                                </span>
+                                <span class="text-danger fw-bold ms-2">
+                                    $@DiscountService.CalculateDiscountedPrice(game.Price, game.DiscountPercentage.Value).ToString("0.00")
+                                </span>
+                                <span class="badge bg-success ms-2">
+                                    -@Math.Round(game.DiscountPercentage.Value, 0)% Off
+                                </span>
+                            </h6>
                         }
-                        <p class="card-text">Price: $@game.Price</p>
-                        <a asp-action="Details" asp-controller="Game" asp-route-id="@game.Id" class="btn btn-primary">Details</a>
+                        else
+                        {
+                            <h6 class="card-subtitle mb-2 text-muted mt-2">
+                                Price: $@game.Price.ToString("0.00")
+                            </h6>
+                        }
+
+                        <a asp-action="Details" asp-controller="Game" asp-route-id="@game.Id" class="btn btn-primary mt-3">Details</a>
                     </div>
                 </div>
             </div>

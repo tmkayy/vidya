@@ -5,9 +5,11 @@ using vidya.Data.Models;
 using vidya.Data.Repositories;
 using vidya.Data.Seeder;
 using vidya.Services.Data.ActivationKeys;
+using vidya.Services.Data.Discounts;
 using vidya.Services.Data.Games;
 using vidya.Services.Mapping;
 using vidya.ThirdParty.Services.Images;
+using vidya.ThirdParty.Services.Payments;
 using vidya.Web.DTOs.Games;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,6 +28,8 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 builder.Services.AddScoped<IGameService, GameService>();
 builder.Services.AddScoped<IActivationKeyService, ActivationKeyService>();
 builder.Services.AddScoped<ICloudinaryService, CloudinaryService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<IDiscountService, DiscountService>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 

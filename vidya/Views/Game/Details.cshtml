@@ -1,5 +1,7 @@
-﻿@using vidya.Web.DTOs.Games
+﻿@using vidya.Services.Data.Discounts
+@using vidya.Web.DTOs.Games
 @model DetailGameDTO
+@inject IDiscountService DiscountService
 
 <div class="container mt-5">
     <input type="hidden" class="Id" value="@Model.Id" />
@@ -12,21 +14,30 @@
                 <div class="card-body">
                     <h5 class="card-title">@Model.Name</h5>
                     <p class="card-text">@Model.Description</p>
-                    <h6 class="card-subtitle mb-2 text-muted">
-                        Price: $@Model.Price.ToString("0.00")
-                        @if (Model.Discount != null && Model.Discount.Percentage > 0)
-                        {
-                            <span class="text-success">
-                                (-@Model.Discount.Percentage.ToString("0.00")% Off)
-                            </span>
-                        }
-                    </h6>
-                    @if (Model.Discount != null)
+                    @if (Model.Discount != null && Model.Discount.Percentage > 0)
                     {
+                        <h6 class="card-subtitle mb-2">
+                            <span class="text-muted text-decoration-line-through">
+                                $@Model.Price.ToString("0.00")
+                            </span>
+                            <span class="text-danger fw-bold ms-2">
+                                $@DiscountService.CalculateDiscountedPrice(Model.Price, Model.Discount.Percentage).ToString("0.00")
+                            </span>
+                            <span class="badge bg-success ms-2">
+                                -@Math.Round(Model.Discount.Percentage, 0)% Off
+                            </span>
+                        </h6>
                         <p class="card-text text-muted">
                             Discount valid from @Model.Discount.StartDate.ToShortDateString() to @Model.Discount.EndDate.ToShortDateString()
                         </p>
                     }
+                    else
+                    {
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            Price: $@Model.Price.ToString("0.00")
+                        </h6>
+                    }
+
                     @if (this.User.GetId() is not null)
                     {
                         <div class="d-flex justify-content-start mt-4">
@@ -55,7 +66,7 @@
                         <p><strong>Key:</strong> @key.Key</p>
                         <p><strong>Locations:</strong> @string.Join(", ", key.Locations)</p>
                     </div>
-                    <a asp-controller="Keys" asp-action="Buy" asp-route-id="@key.Id" class="btn btn-primary">Buy Key</a>
+                    <a asp-controller="Payment" asp-action="Pay" asp-route-id="@key.Id" class="btn btn-primary">Buy Key</a>
                 </div>
             }
         </div>

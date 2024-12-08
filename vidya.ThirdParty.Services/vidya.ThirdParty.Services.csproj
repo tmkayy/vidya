@@ -13,4 +13,8 @@
     <PackageReference Include="Stripe.net" Version="47.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\vidya.Data\vidya.Data.csproj" />
+  </ItemGroup>
+
 </Project>

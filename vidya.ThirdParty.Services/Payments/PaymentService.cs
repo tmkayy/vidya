@@ -1,30 +1,32 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Stripe;
 using Stripe.Checkout;
-using vidya.Services.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using vidya.Data.Models;
+using vidya.Data.Repositories;
 
 namespace vidya.ThirdParty.Services.Payments
 {
     public class PaymentService : IPaymentService
     {
         private readonly IConfiguration _configuration;
+        private readonly IRepository<ActivationKey> _activationKeyRepository;
 
-        public PaymentService(IConfiguration configuration, IActivationKeyService)
+        public PaymentService(IConfiguration configuration, IRepository<ActivationKey> activationKeyRepository)
         {
             _configuration = configuration;
+            _activationKeyRepository = activationKeyRepository;
         }
 
         public string GetSessionUrl(int activationKeyId)
         {
             StripeConfiguration.ApiKey = _configuration["Stripe:SecretKey"];
+
+            var game = GetGameByActivationKeyAsync(activationKeyId).GetAwaiter().GetResult();
+
             var options = new SessionCreateOptions
             {
-                PaymentMethodTypes = new List<string> { "card" },
+                PaymentMethodTypes = ["card"],
                 Metadata = new Dictionary<string, string>()
                 {
                     { "id", activationKeyId.ToString() }
@@ -35,26 +37,43 @@ namespace vidya.ThirdParty.Services.Payments
                     {
                         PriceData = new SessionLineItemPriceDataOptions
                         {
-                            UnitAmountDecimal = paymentDTO.TotalPrice * 100,
+                            UnitAmountDecimal = CalculateDiscountedPrice(game),
                             Currency = "usd",
                             ProductData = new SessionLineItemPriceDataProductDataOptions
                             {
-                                Name = paymentDTO.Model,
-                                Images = new List<string?> { paymentDTO.ImageUrl },
+                                Name = game.Name,
+                                Images = [game.ImageUrl]
                             },
                         },
                         Quantity = 1,
                     },
                 },
                 Mode = "payment",
-                SuccessUrl = "http://localhost:4200/success",
-                CancelUrl = "http://localhost:4200/cancel",
+                SuccessUrl = "https://localhost:7255/Game",
+                CancelUrl = "https://localhost:7255/Game",
             };
 
             var sessionService = new SessionService();
             var session = sessionService.Create(options);
 
-            return Ok(new { url = session.Url });
+            return session.Url;
+        }
+
+        private async Task<Game> GetGameByActivationKeyAsync(int id)
+        {
+            var activationKey = await _activationKeyRepository.AllAsNoTracking().Include(g => g.Game).ThenInclude(g => g.Discount)
+                .FirstOrDefaultAsync(a => a.Id == id);
+            return activationKey.Game;
+        }
+
+        private decimal CalculateDiscountedPrice(Game game)
+        {
+            decimal discountedPrice = game.Price;
+            if (game.Discount is not null && game.Discount.Percentage > 0)
+            {
+                discountedPrice = (game.Price - (game.Price * game.Discount.Percentage / 100.0m)) * 100;
+            }
+            return discountedPrice;
         }
     }
 }
