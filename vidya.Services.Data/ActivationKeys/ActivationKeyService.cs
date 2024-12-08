@@ -24,5 +24,12 @@ namespace vidya.Services.Data.ActivationKeys
              .To<ActivationKeyDTO>()
              .ToListAsync();
         }
+
+        public async Task<Game> GetGameByActivationKeyAsync(int id)
+        {
+            var activationKey = await _activationKeyRepository.AllAsNoTracking().Include(g => g.Game)
+                .FirstOrDefaultAsync(a => a.Id == id);
+            return activationKey.Game;
+        }
     }
 }

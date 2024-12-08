@@ -1,4 +1,5 @@
-﻿using vidya.Web.DTOs.ActivationKeys;
+﻿using vidya.Data.Models;
+using vidya.Web.DTOs.ActivationKeys;
 
 namespace vidya.Services.Data.ActivationKeys
 {
@@ -6,5 +7,6 @@ namespace vidya.Services.Data.ActivationKeys
     {
         Task<IEnumerable<ActivationKeyDTO>> GetActivationKeys(int gameId);
         
+        Task<Game> GetGameByActivationKeyAsync(int id);
     }
 }
