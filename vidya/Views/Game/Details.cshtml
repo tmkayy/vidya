@@ -1,0 +1,52 @@
+﻿@using vidya.Web.DTOs.Games
+@model DetailGameDTO
+
+<div class="container mt-5">
+    <input type="hidden" class="Id" value="@Model.Id" />
+    <div class="card">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="@Model.ImageUrl" class="img-fluid rounded-start" alt="@Model.Name">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">@Model.Name</h5>
+                    <p class="card-text">@Model.Description</p>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        Price: $@Model.Price.ToString("0.00")
+                        @if (Model.Discount != null && Model.Discount.Percentage > 0)
+                        {
+                            <span class="text-success">
+                                (-@Model.Discount.Percentage.ToString("0.00")% Off)
+                            </span>
+                        }
+                    </h6>
+                    @if (Model.Discount != null)
+                    {
+                        <p class="card-text text-muted">
+                            Discount valid from @Model.Discount.StartDate.ToShortDateString() to @Model.Discount.EndDate.ToShortDateString()
+                        </p>
+                    }
+                    @if (this.User.GetId() is not null)
+                    {
+                        <div class="d-flex justify-content-start mt-4">
+                            <a asp-controller="Games" asp-action="Buy" asp-route-id="@Model.Id" class="btn btn-primary me-2">Buy Game</a>
+                            @if (this.User.IsAdmin())
+                            {
+                                <a asp-controller="Discounts" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-warning me-2">Add Discount</a>
+
+                                <button class="btn btn-danger deleteGame">
+                                    <i class="fas fa-trash-alt" data-id="@Model.Id"></i> Delete
+                                </button>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/deleteScript.js"></script>
+<script>
+    setupDeleteConfirmation('.deleteGame', 'Game', 'game');
+</script>

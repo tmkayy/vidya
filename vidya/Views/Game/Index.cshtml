@@ -19,6 +19,10 @@
                     <img src="@game.ImageUrl" class="card-img-top" alt="@game.Name" style="height: 200px; object-fit: cover;">
                     <div class="card-body">
                         <h5 class="card-title">@game.Name</h5>
+                        @if (game.DiscountPercentage is not null && game.DiscountPercentage != 0)
+                        {
+                            <p class="card-text">-@game.DiscountPercentage</p>
+                        }
                         <p class="card-text">Price: $@game.Price</p>
                         <a asp-action="Details" asp-controller="Game" asp-route-id="@game.Id" class="btn btn-primary">Details</a>
                     </div>

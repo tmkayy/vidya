@@ -32,5 +32,16 @@ namespace vidya.Controllers
             await _gameService.AddGameAsync(addGameDTO);
             return RedirectToAction(nameof(Index));
         }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            return View(await _gameService.GetDetailGameAsync(id));
+        }
+
+        [HttpDelete]
+        public async Task Delete(int id)
+        {
+            await _gameService.DeleteGame(id);
+        }
     }
 }

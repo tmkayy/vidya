@@ -32,12 +32,25 @@ namespace vidya.Services.Data.Games
             await _gameRepository.SaveChangesAsync();
         }
 
+        public async Task DeleteGame(int id)
+        {
+            var game = await _gameRepository.AllAsNoTracking().FirstOrDefaultAsync(g => g.Id == id);
+            _gameRepository.Delete(game);
+            await _gameRepository.SaveChangesAsync();
+        }
+
+        public async Task<DetailGameDTO> GetDetailGameAsync(int id)
+        {
+            var game = await _gameRepository.AllAsNoTracking().Include(g=>g.Discount).FirstOrDefaultAsync(g => g.Id == id);
+            return AutoMapperConfig.MapperInstance.Map<DetailGameDTO>(game);
+        }
+
         public async Task<IEnumerable<GameDTO>> GetGamesAsync(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
-                return await _gameRepository.AllAsNoTracking().To<GameDTO>().ToListAsync();
+                return await _gameRepository.AllAsNoTracking().Include(g => g.Discount).To<GameDTO>().ToListAsync();
             return await _gameRepository.AllAsNoTracking()
-                .Where(g => EF.Functions.Like(g.Name, $"%{name}%")).To<GameDTO>().ToListAsync();
+                .Where(g => EF.Functions.Like(g.Name, $"%{name}%")).Include(g => g.Discount).To<GameDTO>().ToListAsync();
         }
     }
 }
