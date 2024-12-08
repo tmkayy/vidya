@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using vidya.Web.DTOs.ActivationKeys;
+﻿using vidya.Web.DTOs.ActivationKeys;
 
 namespace vidya.Services.Data.ActivationKeys
 {
-    public class IActivationKeyService
+    public interface IActivationKeyService
     {
-        // hello niggas
+        Task<IEnumerable<ActivationKeyDTO>> GetActivationKeys(int gameId);
         
     }
 }

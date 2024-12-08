@@ -30,7 +30,6 @@
                     @if (this.User.GetId() is not null)
                     {
                         <div class="d-flex justify-content-start mt-4">
-                            <a asp-controller="Games" asp-action="Buy" asp-route-id="@Model.Id" class="btn btn-primary me-2">Buy Game</a>
                             @if (this.User.IsAdmin())
                             {
                                 <a asp-controller="Discounts" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-warning me-2">Add Discount</a>
@@ -45,7 +44,24 @@
             </div>
         </div>
     </div>
+
+    <div class="mt-4">
+        <h5>Activation Keys</h5>
+        <div class="list-group">
+            @foreach (var key in Model.Keys)
+            {
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <p><strong>Key:</strong> @key.Key</p>
+                        <p><strong>Locations:</strong> @string.Join(", ", key.Locations)</p>
+                    </div>
+                    <a asp-controller="Keys" asp-action="Buy" asp-route-id="@key.Id" class="btn btn-primary">Buy Key</a>
+                </div>
+            }
+        </div>
+    </div>
 </div>
+
 <script src="~/js/deleteScript.js"></script>
 <script>
     setupDeleteConfirmation('.deleteGame', 'Game', 'game');

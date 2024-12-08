@@ -15,7 +15,6 @@ namespace vidya.Services.Data.Games
     public class GameService : IGameService
     {
         private readonly IRepository<Game> _gameRepository;
-
         private readonly ICloudinaryService _cloudinaryService;
 
         public GameService(IRepository<Game> gameRepository, ICloudinaryService cloudinaryService)

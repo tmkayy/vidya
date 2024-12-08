@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using vidya.Services.Data.ActivationKeys;
 using vidya.Services.Data.Games;
 using vidya.Web.DTOs.Games;
 
@@ -7,10 +8,12 @@ namespace vidya.Controllers
     public class GameController : Controller
     {
         private readonly IGameService _gameService;
+        private readonly IActivationKeyService _activationKeyService;
 
-        public GameController(IGameService gameService)
+        public GameController(IGameService gameService, IActivationKeyService activationKeyService)
         {
             _gameService = gameService;
+            _activationKeyService = activationKeyService;
         }
 
         public async Task<IActionResult> Index(string name = "")
@@ -35,7 +38,10 @@ namespace vidya.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            return View(await _gameService.GetDetailGameAsync(id));
+            var details = await _gameService.GetDetailGameAsync(id);
+            details.Keys = await _activationKeyService.GetActivationKeys(id);
+
+            return View(details);
         }
 
         [HttpDelete]

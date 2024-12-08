@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using vidya.Data.Models;
 using vidya.Services.Mapping;
+using vidya.Web.DTOs.ActivationKeys;
 
 namespace vidya.Web.DTOs.Games
 {
@@ -22,5 +23,7 @@ namespace vidya.Web.DTOs.Games
         public decimal Price { get; set; }
 
         public Discount? Discount { get; set; }
+
+        public IEnumerable<ActivationKeyDTO> Keys { get; set; } = new HashSet<ActivationKeyDTO>();
     }
 }
