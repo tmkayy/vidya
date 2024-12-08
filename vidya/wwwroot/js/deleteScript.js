@@ -2,7 +2,6 @@
     $(document).ready(function () {
         $(buttonSelector).click(function () {
             const itemId = $(this).data('id');
-
             Swal.fire({
                 title: `Are you sure you want to delete this ${itemName}?`,
                 text: "You won't be able to revert this!",
@@ -13,17 +12,18 @@
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
+                    // send AJAX request to delete endpoint
                     $.ajax({
                         url: `/${controllerName}/Delete/${itemId}`,
                         type: 'DELETE',
                         success: function (response) {
-                            // success
+                            // handle success response
                             Swal.fire(
                                 'Deleted!',
                                 `The ${itemName} has been deleted.`,
                                 'success'
                             ).then(() => {
-                                // go back to index page
+                                // redirect to the index page
                                 window.location.href = `/${controllerName}/Index`;
                             });
                         },
