@@ -20,7 +20,7 @@ namespace vidya.Services.Data.Discounts
 
         public async Task AddDiscountAsync(AddDiscountDTO addDiscountDTO, int gameId)
         {
-            var game = await _repositoryGame.AllAsNoTracking().FirstOrDefaultAsync(g => g.Id == gameId);
+            var game = await _repositoryGame.All().FirstOrDefaultAsync(g => g.Id == gameId);
             if (game == null)
             {
                 throw new ArgumentException("Invalid game ID.");
@@ -42,7 +42,7 @@ namespace vidya.Services.Data.Discounts
                 var newDiscount = AutoMapperConfig.MapperInstance.Map<Discount>(addDiscountDTO);
                 newDiscount.Games = new List<Game> { game };
 
-                _repositoryDiscount.Update(newDiscount);
+                await _repositoryDiscount.AddAsync(newDiscount);
             }
             await _repositoryDiscount.SaveChangesAsync();
         }
