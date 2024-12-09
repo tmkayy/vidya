@@ -11,6 +11,8 @@ namespace vidya.Web.DTOs.SupportTickets
 {
     public class TicketDTO:IMapFrom<SupportTicket>, IHaveCustomMappings
     {
+        public int Id { get; set; }
+
         public string Title { get; set; } = null!;
 
         public string Content { get; set; } = null!;
@@ -19,7 +21,7 @@ namespace vidya.Web.DTOs.SupportTickets
 
         public void CreateMappings(IProfileExpression configuration)
         {
-            throw new NotImplementedException();
+            configuration.CreateMap<SupportTicket, TicketDTO>().ForMember(d=>d.Email, opt=>opt.MapFrom(src=>src.User.Email));
         }
     }
 }

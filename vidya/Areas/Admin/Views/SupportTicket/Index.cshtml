@@ -1,0 +1,44 @@
+﻿@using vidya.Web.DTOs.SupportTickets
+@model IEnumerable<TicketDTO>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "_Layout";
+}
+<div class="container mt-5">
+    <h2 class="mb-4">Support Tickets</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            No support tickets available.
+        </div>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Content</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var ticket in Model)
+                {
+                    <tr>
+                        <td>@ticket.Title</td>
+                        <td>@ticket.Content</td>
+                        <td>@ticket.Email</td>
+                        <td>
+                            <a asp-action="Resolve" asp-area="Admin" asp-controller="SupportTicket" asp-route-id ="@ticket.Id" class="btn btn-success btn-sm">
+                                Resolve
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

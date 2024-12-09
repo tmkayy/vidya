@@ -11,7 +11,7 @@ namespace vidya.Services.Data.SupportTickets
     {
         Task SendTicketAsync(SendTicketDTO sendTicketDTO, string userId);
 
-        Task<IEnumerable<SendTicketDTO>> GetTicketAsync();
+        Task<IEnumerable<TicketDTO>> GetTicketAsync();
 
         Task ResolveTicketAsync(int ticketId);
     }

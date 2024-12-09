@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,14 +20,17 @@ namespace vidya.Services.Data.SupportTickets
             _repository = repository;
         }
 
-        public Task<IEnumerable<SendTicketDTO>> GetTicketAsync()
+        public async Task<IEnumerable<TicketDTO>> GetTicketAsync()
         {
-            
+            return await _repository.AllAsNoTracking().Where(st => !st.IsResolved)
+                .Include(st => st.User).To<TicketDTO>().ToListAsync();
         }
 
-        public Task ResolveTicketAsync(int ticketId)
+        public async Task ResolveTicketAsync(int ticketId)
         {
-            throw new NotImplementedException();
+            var ticket = await _repository.All().FirstOrDefaultAsync(st => st.Id == ticketId);
+            ticket.IsResolved = true;
+            await _repository.SaveChangesAsync();
         }
 
         public async Task SendTicketAsync(SendTicketDTO sendTicketDTO, string userId)
