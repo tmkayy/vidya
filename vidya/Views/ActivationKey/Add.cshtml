@@ -1,0 +1,28 @@
+﻿@using vidya.Web.DTOs.ActivationKeys
+@model AddActivationKeyDTO
+
+<form asp-action="Add" method="post" class="form-group">
+    <input asp-for="GameId" type="hidden" />
+    <div class="mb-3">
+        <label for="Key" class="form-label">Activation Key:</label>
+        <input type="text" asp-for="Key" id="Key" class="form-control" />
+        <span asp-validation-for="Key" class="text-danger"></span>
+    </div>
+
+    <h4>Select Locations:</h4>
+    <div class="form-check">
+        @foreach (var location in Model.Locations)
+        {
+            <div>
+                <input type="checkbox" class="form-check-input" name="SelectedIds" value="@location.Id" id="loc-@location.Id" />
+                <label class="form-check-label" for="loc-@location.Id">
+                    @location.Continent
+                </label>
+            </div>
+        }
+    </div>
+
+    <div class="mt-3">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
