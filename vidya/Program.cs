@@ -7,6 +7,7 @@ using vidya.Data.Seeder;
 using vidya.Services.Data.ActivationKeys;
 using vidya.Services.Data.Discounts;
 using vidya.Services.Data.Games;
+using vidya.Services.Data.SupportTickets;
 using vidya.Services.Mapping;
 using vidya.ThirdParty.Services.Images;
 using vidya.ThirdParty.Services.Payments;
@@ -30,6 +31,7 @@ builder.Services.AddScoped<IActivationKeyService, ActivationKeyService>();
 builder.Services.AddScoped<ICloudinaryService, CloudinaryService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IDiscountService, DiscountService>();
+builder.Services.AddScoped<ISupportTicketService, SupportTicketService>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
@@ -62,10 +64,16 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+app.UseEndpoints(config =>
+{
+    config.MapControllerRoute
+    (
+        name: "areas",
+        pattern: "/{area:exists}/{controller=Home}/{action=Index}/{id?}"
+    );
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-app.MapRazorPages();
+    config.MapDefaultControllerRoute();
+    config.MapRazorPages();
+});
 
 app.Run();

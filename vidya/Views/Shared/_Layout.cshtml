@@ -32,7 +32,13 @@
                         @if (this.User.IsAdmin())
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Game" asp-action="Add">Add Game</a>
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Game" asp-action="Add">Add Game</a>
+                            </li>
+                        }
+                        @if (this.User.GetId() is not null && !this.User.IsAdmin())
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="SupportTicket" asp-action="Send">Send Ticket</a>
                             </li>
                         }
                     </ul>

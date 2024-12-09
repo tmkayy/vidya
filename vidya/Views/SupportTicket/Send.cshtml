@@ -1,0 +1,21 @@
+﻿@using vidya.Web.DTOs.SupportTickets
+@model SendTicketDTO
+<div class="container mt-5">
+    <h2 class="mb-4">Send Support Ticket</h2>
+    <form asp-action="Send" asp-controller="SupportTicket" method="post" class="needs-validation" novalidate>
+        <div class="mb-3">
+            <label asp-for="Title" class="form-label">Title</label>
+            <input asp-for="Title" class="form-control" placeholder="Enter ticket title" required />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Content" class="form-label">Content</label>
+            <textarea asp-for="Content" class="form-control" rows="5" placeholder="Enter ticket content" required></textarea>
+            <span asp-validation-for="Content" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a asp-action="Index" asp-controller="Home" class="btn btn-secondary ms-2">Cancel</a>
+    </form>
+</div>

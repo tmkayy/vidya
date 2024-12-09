@@ -31,4 +31,9 @@
     <ProjectReference Include="..\vidya.Web.Infrastructure\vidya.Web.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+  </ItemGroup>
+
 </Project>

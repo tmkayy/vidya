@@ -3,8 +3,9 @@ using vidya.Services.Data.ActivationKeys;
 using vidya.Services.Data.Games;
 using vidya.Web.DTOs.Games;
 
-namespace vidya.Controllers
+namespace vidya.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class GameController : Controller
     {
         private readonly IGameService _gameService;
@@ -16,24 +17,18 @@ namespace vidya.Controllers
             _activationKeyService = activationKeyService;
         }
 
-        public async Task<IActionResult> Index(string name = "")
+        public IActionResult Add()
         {
-            ViewData["name"] = name;
-            return View(await _gameService.GetGamesAsync(name));
+            return View();
         }
 
-        public async Task<IActionResult> Details(int id)
+        [HttpPost]
+        public async Task<IActionResult> Add(AddGameDTO addGameDTO)
         {
-            var details = await _gameService.GetDetailGameAsync(id);
-            details.Keys = await _activationKeyService.GetActivationKeys(id);
-
-            return View(details);
-        }
-
-        [HttpDelete]
-        public async Task Delete(int id)
-        {
-            await _gameService.DeleteGame(id);
+            if (!ModelState.IsValid)
+                return View(addGameDTO);
+            await _gameService.AddGameAsync(addGameDTO);
+            return RedirectToAction("Index", "Game", new { area = "" });
         }
     }
 }
