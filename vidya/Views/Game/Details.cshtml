@@ -43,7 +43,7 @@
                         <div class="d-flex justify-content-start mt-4">
                             @if (this.User.IsAdmin())
                             {
-                                <a asp-controller="Discounts" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-warning me-2">Add Discount</a>
+                                <a asp-controller="Discount" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-warning me-2">Add Discount</a>
 
                                 <button class="btn btn-danger deleteGame" data-id="@Model.Id">
                                     <i class="fas fa-trash-alt"></i> Delete
