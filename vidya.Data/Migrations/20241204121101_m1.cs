@@ -224,7 +224,8 @@ namespace vidya.Data.Migrations
                         name: "FK_Games_Discounts_DiscountId",
                         column: x => x.DiscountId,
                         principalTable: "Discounts",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull); 
                 });
 
             migrationBuilder.CreateTable(

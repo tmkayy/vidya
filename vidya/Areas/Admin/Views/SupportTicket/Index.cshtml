@@ -1,13 +1,14 @@
 ﻿@using vidya.Web.DTOs.SupportTickets
-@model IEnumerable<TicketDTO>
+@model SupportTicketPagedDTO
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     Layout = "_Layout";
 }
+
 <div class="container mt-5">
     <h2 class="mb-4">Support Tickets</h2>
 
-    @if (!Model.Any())
+    @if (!Model.Tickets.Any())
     {
         <div class="alert alert-info">
             No support tickets available.
@@ -25,14 +26,14 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var ticket in Model)
+                @foreach (var ticket in Model.Tickets)
                 {
                     <tr>
                         <td>@ticket.Title</td>
                         <td>@ticket.Content</td>
                         <td>@ticket.Email</td>
                         <td>
-                            <a asp-action="Resolve" asp-area="Admin" asp-controller="SupportTicket" asp-route-id ="@ticket.Id" class="btn btn-success btn-sm">
+                            <a asp-action="Resolve" asp-area="Admin" asp-controller="SupportTicket" asp-route-id="@ticket.Id" class="btn btn-success btn-sm">
                                 Resolve
                             </a>
                         </td>
@@ -40,5 +41,24 @@
                 }
             </tbody>
         </table>
+
+        <nav>
+            <ul class="pagination">
+                <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
+                    <a class="page-link" asp-action="Index" asp-route-page="@(Model.CurrentPage - 1)">Previous</a>
+                </li>
+
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                        <a class="page-link" asp-action="Index" asp-route-page="@i">@i</a>
+                    </li>
+                }
+
+                <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+                    <a class="page-link" asp-action="Index" asp-route-page="@(Model.CurrentPage + 1)">Next</a>
+                </li>
+            </ul>
+        </nav>
     }
 </div>

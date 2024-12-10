@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using vidya.Data.Models;
 using vidya.Data.Repositories;
 using vidya.Services.Mapping;
@@ -20,12 +15,6 @@ namespace vidya.Services.Data.SupportTickets
             _repository = repository;
         }
 
-        public async Task<IEnumerable<TicketDTO>> GetTicketAsync()
-        {
-            return await _repository.AllAsNoTracking().Where(st => !st.IsResolved)
-                .Include(st => st.User).To<TicketDTO>().ToListAsync();
-        }
-
         public async Task ResolveTicketAsync(int ticketId)
         {
             var ticket = await _repository.All().FirstOrDefaultAsync(st => st.Id == ticketId);
@@ -39,6 +28,28 @@ namespace vidya.Services.Data.SupportTickets
             ticket.UserId = userId;
             await _repository.AddAsync(ticket);
             await _repository.SaveChangesAsync();
+        }
+
+        public async Task<SupportTicketPagedDTO> GetPagedTicketsAsync(int pageNumber, int pageSize)
+        {
+            int totalTickets = await _repository.AllAsNoTracking()
+                            .Where(st => !st.IsResolved)
+                            .CountAsync();
+
+            var tickets = await _repository.AllAsNoTracking()
+                 .Where(st => !st.IsResolved)
+                 .Include(st => st.User)
+                 .Skip((pageNumber - 1) * pageSize)
+                 .Take(pageSize)
+                 .To<TicketDTO>()
+                 .ToListAsync();
+
+            return new SupportTicketPagedDTO
+            {
+                Tickets = tickets,
+                CurrentPage = pageNumber,
+                TotalPages = (int)Math.Ceiling(totalTickets / (double)pageSize),
+            };
         }
     }
 }

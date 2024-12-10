@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using vidya.Web.DTOs.SupportTickets;
+﻿using vidya.Web.DTOs.SupportTickets;
 
 namespace vidya.Services.Data.SupportTickets
 {
@@ -11,7 +6,7 @@ namespace vidya.Services.Data.SupportTickets
     {
         Task SendTicketAsync(SendTicketDTO sendTicketDTO, string userId);
 
-        Task<IEnumerable<TicketDTO>> GetTicketAsync();
+        Task<SupportTicketPagedDTO> GetPagedTicketsAsync(int pageNumber, int pageSize);
 
         Task ResolveTicketAsync(int ticketId);
     }

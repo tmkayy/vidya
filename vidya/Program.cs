@@ -34,6 +34,7 @@ builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IDiscountService, DiscountService>();
 builder.Services.AddScoped<ILocationService, LocationService>();
 builder.Services.AddScoped<ISupportTicketService, SupportTicketService>();
+builder.Services.AddHostedService<DiscountBackgroundService>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 

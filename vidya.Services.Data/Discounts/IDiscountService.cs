@@ -7,5 +7,7 @@ namespace vidya.Services.Data.Discounts
         decimal CalculateDiscountedPrice(decimal price, decimal percentage);
 
         Task AddDiscountAsync(AddDiscountDTO addDiscountDTO, int gameId);
+
+        Task DeleteExpiredDiscountsAsync();
     }
 }

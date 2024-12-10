@@ -13,9 +13,11 @@ namespace vidya.Areas.Admin.Controllers
             _supportTicketService = supportTicketService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
-            return View(await _supportTicketService.GetTicketAsync());
+            int pageSize = 5;
+            var pagedTickets = await _supportTicketService.GetPagedTicketsAsync(page, pageSize);
+            return View(pagedTickets);
         }
 
         public async Task<IActionResult> Resolve(int id)

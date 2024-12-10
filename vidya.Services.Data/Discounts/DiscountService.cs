@@ -27,7 +27,7 @@ namespace vidya.Services.Data.Discounts
             }
             var existingDiscount = await _repositoryDiscount
                 .All()
-                .Include(d => d.Games) 
+                .Include(d => d.Games)
                 .FirstOrDefaultAsync(d => d.Id == addDiscountDTO.Id);
 
             if (existingDiscount != null)
@@ -47,7 +47,13 @@ namespace vidya.Services.Data.Discounts
             await _repositoryDiscount.SaveChangesAsync();
         }
 
-
         public decimal CalculateDiscountedPrice(decimal price, decimal percentage) => price - (price * percentage / 100.0m);
+
+        public async Task DeleteExpiredDiscountsAsync()
+        {
+            var expiredDiscounts = await _repositoryDiscount.All().Where(d => d.EndDate <= DateTime.UtcNow).ToListAsync();
+            expiredDiscounts.ForEach(_repositoryDiscount.Delete);
+            await _repositoryDiscount.SaveChangesAsync();
+        }
     }
 }
