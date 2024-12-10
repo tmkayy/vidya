@@ -4,6 +4,7 @@ using Stripe;
 using Stripe.Checkout;
 using vidya.Data.Models;
 using vidya.Data.Repositories;
+using vidya.Web.DTOs.Payments;
 
 namespace vidya.ThirdParty.Services.Payments
 {
@@ -11,6 +12,7 @@ namespace vidya.ThirdParty.Services.Payments
     {
         private readonly IConfiguration _configuration;
         private readonly IRepository<ActivationKey> _activationKeyRepository;
+
 
         public PaymentService(IConfiguration configuration, IRepository<ActivationKey> activationKeyRepository)
         {
@@ -74,6 +76,15 @@ namespace vidya.ThirdParty.Services.Payments
                 discountedPrice = (game.Price - (game.Price * game.Discount.Percentage / 100.0m)) * 100;
             }
             return discountedPrice;
+        }
+
+        public async Task PayAsync(PaymentDTO paymentDTO)
+        {
+            var activationKey = await _activationKeyRepository.All()
+                .FirstOrDefaultAsync(a => a.Id == paymentDTO.ActivationKeyId);
+            activationKey.UserId = paymentDTO.UserId;
+            _activationKeyRepository.Update(activationKey);
+            await _activationKeyRepository.SaveChangesAsync();
         }
     }
 }

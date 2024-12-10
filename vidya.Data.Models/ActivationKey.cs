@@ -23,6 +23,11 @@ namespace vidya.Data.Models
         [Required]
         public Game Game { get; set; } = null!;
 
+        [ForeignKey(nameof(ApplicationUser))]
+        public string? UserId { get; set; }
+
+        public ApplicationUser? ApplicationUser { get; set; }
+
         public ICollection<LocationsKeys> Locations { get; set; } = new HashSet<LocationsKeys>();
     }
 }
