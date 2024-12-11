@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vidya.Web.Infrastructure", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vidya.Common", "..\vidya.Common\vidya.Common.csproj", "{6B35185A-B4E2-4753-A374-FFFB277083F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vidya.UnitTests", "..\vidya.UnitTests\vidya.UnitTests.csproj", "{9E94488B-F695-4896-A627-476B13F3F03F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{6B35185A-B4E2-4753-A374-FFFB277083F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B35185A-B4E2-4753-A374-FFFB277083F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B35185A-B4E2-4753-A374-FFFB277083F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E94488B-F695-4896-A627-476B13F3F03F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E94488B-F695-4896-A627-476B13F3F03F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E94488B-F695-4896-A627-476B13F3F03F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E94488B-F695-4896-A627-476B13F3F03F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
