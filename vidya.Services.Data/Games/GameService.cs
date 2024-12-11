@@ -38,6 +38,7 @@ namespace vidya.Services.Data.Games
             await _gameRepository.SaveChangesAsync();
         }
 
+        public async Task<bool> ExistsAsync(int id) => await _gameRepository.AllAsNoTracking().AnyAsync(g => g.Id == id);
         public async Task<DetailGameDTO> GetDetailGameAsync(int id)
         {
             var game = await _gameRepository.AllAsNoTracking().Include(g=>g.Discount).FirstOrDefaultAsync(g => g.Id == id);

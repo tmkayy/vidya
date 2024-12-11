@@ -22,5 +22,19 @@ namespace vidya.Controllers
             return View();
         }
 
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error(int statusCode)
+        {
+            switch (statusCode)
+            {
+                case 400:
+                case 404:
+                    return View("Error404");
+                case 401:
+                    return View("Error401");
+                default:
+                    return View("Error500");
+            }
+        }
     }
 }

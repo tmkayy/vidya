@@ -9,5 +9,7 @@ namespace vidya.Services.Data.ActivationKeys
         Task AddActivationKeyAsync(AddActivationKeyDTO addActivationKeyDTO);
 
         Task<IEnumerable<BoughtActivationKeysDTO>> GetBoughtKeysAsync(string userId);
+
+        Task<bool> ExistsAsync(int id);
     }
 }

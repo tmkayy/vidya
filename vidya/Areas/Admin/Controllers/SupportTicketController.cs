@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using vidya.Services.Data.SupportTickets;
 
 namespace vidya.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class SupportTicketController : Controller
     {
         private readonly ISupportTicketService _supportTicketService;
@@ -22,6 +24,10 @@ namespace vidya.Areas.Admin.Controllers
 
         public async Task<IActionResult> Resolve(int id)
         {
+            if (!await _supportTicketService.ExistsAsync(id))
+            {
+                return NotFound();
+            }
             await _supportTicketService.ResolveTicketAsync(id);
             return RedirectToAction("Index");
         }

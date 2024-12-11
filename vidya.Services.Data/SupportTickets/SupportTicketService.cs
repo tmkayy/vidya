@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using vidya.Data.Models;
 using vidya.Data.Repositories;
 using vidya.Services.Mapping;
@@ -51,5 +52,7 @@ namespace vidya.Services.Data.SupportTickets
                 TotalPages = (int)Math.Ceiling(totalTickets / (double)pageSize),
             };
         }
+
+        public async Task<bool> ExistsAsync(int id) => await _repository.AllAsNoTracking().AnyAsync(st => st.Id == id);
     }
 }

@@ -66,7 +66,10 @@
                         <p><strong>Key:</strong> @key.Key</p>
                         <p><strong>Locations:</strong> @string.Join(", ", key.Locations)</p>
                     </div>
-                    <a asp-controller="Payment" asp-action="Pay" asp-route-id="@key.Id" class="btn btn-primary">Buy Key</a>
+                    @if (this.User.GetId() is not null)
+                    {
+                        <a asp-controller="Payment" asp-action="Pay" asp-route-id="@key.Id" class="btn btn-primary">Buy Key</a>
+                    }
                 </div>
             }
         </div>

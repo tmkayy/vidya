@@ -53,7 +53,9 @@ AutoMapperConfig.RegisterMappings(typeof(GameDTO).Assembly);
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseMigrationsEndPoint();
+    app.UseExceptionHandler("/Home/Error500");
+    app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
+    //app.UseMigrationsEndPoint();
 }
 else
 {

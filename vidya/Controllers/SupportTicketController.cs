@@ -16,13 +16,28 @@ namespace vidya.Controllers
 
         public IActionResult Send()
         {
+            if (this.User.GetId() is null)
+            {
+                return Unauthorized();
+            }
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Send(SendTicketDTO sendTicketDTO)
         {
-            await _supportTicketService.SendTicketAsync(sendTicketDTO, this.User.GetId());
+            string? userId = this.User.GetId();
+
+            if (userId is null)
+            {
+                return Unauthorized();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            await _supportTicketService.SendTicketAsync(sendTicketDTO, userId);
             return RedirectToAction("Index", "Home");
         }
     }

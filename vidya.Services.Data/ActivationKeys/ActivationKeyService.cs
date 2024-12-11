@@ -35,6 +35,8 @@ namespace vidya.Services.Data.ActivationKeys
             await _locationsKeysRepository.SaveChangesAsync();
         }
 
+        public Task<bool> ExistsAsync(int id) => _activationKeyRepository.AllAsNoTracking().AnyAsync(ak => ak.Id == id);
+
         public async Task<IEnumerable<ActivationKeyDTO>> GetActivationKeys(int gameId)
         {
             return await _activationKeyRepository.AllAsNoTracking()

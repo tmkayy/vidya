@@ -24,6 +24,10 @@ namespace vidya.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
+            if (!await _gameService.ExistsAsync(id))
+            {
+                return NotFound();
+            }
             var details = await _gameService.GetDetailGameAsync(id);
             details.Keys = await _activationKeyService.GetActivationKeys(id);
 

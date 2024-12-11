@@ -9,5 +9,7 @@ namespace vidya.Services.Data.SupportTickets
         Task<SupportTicketPagedDTO> GetPagedTicketsAsync(int pageNumber, int pageSize);
 
         Task ResolveTicketAsync(int ticketId);
+
+        Task<bool> ExistsAsync(int id);
     }
 }

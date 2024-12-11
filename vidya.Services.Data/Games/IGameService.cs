@@ -16,5 +16,7 @@ namespace vidya.Services.Data.Games
         Task<DetailGameDTO> GetDetailGameAsync(int id);
 
         Task DeleteGame(int id);
+
+        Task<bool> ExistsAsync(int id);
     }
 }
