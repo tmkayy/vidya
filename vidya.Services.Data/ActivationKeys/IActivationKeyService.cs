@@ -7,5 +7,7 @@ namespace vidya.Services.Data.ActivationKeys
     {
         Task<IEnumerable<ActivationKeyDTO>> GetActivationKeys(int gameId);
         Task AddActivationKeyAsync(AddActivationKeyDTO addActivationKeyDTO);
+
+        Task<IEnumerable<BoughtActivationKeysDTO>> GetBoughtKeysAsync(string userId);
     }
 }

@@ -2,6 +2,7 @@
 using vidya.Services.Data.ActivationKeys;
 using vidya.Services.Data.Locations;
 using vidya.Web.DTOs.ActivationKeys;
+using vidya.Web.Infrastructure.Extensions;
 
 namespace vidya.Controllers
 {
@@ -31,6 +32,18 @@ namespace vidya.Controllers
         {
             await _activationKeyService.AddActivationKeyAsync(addActivationKeyDTO);
             return RedirectToAction("Details", "Game", new { id = addActivationKeyDTO.GameId });
+        }
+
+        public async Task<IActionResult> Bought()
+        {
+            string? userId = this.User.GetId();
+
+            if (userId is null)
+            {
+                return Unauthorized();
+            }
+
+            return View(await _activationKeyService.GetBoughtKeysAsync(userId));
         }
     }
 }

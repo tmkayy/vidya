@@ -51,7 +51,7 @@ namespace vidya.ThirdParty.Services.Payments
                     },
                 },
                 Mode = "payment",
-                SuccessUrl = "https://localhost:7255/Game",
+                SuccessUrl = "https://localhost:7255/ActivationKey/Bought",
                 CancelUrl = "https://localhost:7255/Game",
             };
 

@@ -38,11 +38,22 @@ namespace vidya.Services.Data.ActivationKeys
         public async Task<IEnumerable<ActivationKeyDTO>> GetActivationKeys(int gameId)
         {
             return await _activationKeyRepository.AllAsNoTracking()
-             .Where(ak => ak.GameId == gameId)
              .Include(ak => ak.Locations)
              .ThenInclude(ak => ak.Location)
+             .Where(ak => ak.GameId == gameId && ak.UserId == null)
              .To<ActivationKeyDTO>()
              .ToListAsync();
+        }
+
+        public async Task<IEnumerable<BoughtActivationKeysDTO>> GetBoughtKeysAsync(string userId)
+        {
+            return await _activationKeyRepository.AllAsNoTracking()
+                .Include(g => g.Game)
+                .Include(g => g.Locations)
+                .ThenInclude(l => l.Location)
+                .Where(g => g.UserId == userId)
+                .To<BoughtActivationKeysDTO>()
+                .ToListAsync();
         }
     }
 }

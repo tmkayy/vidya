@@ -1,0 +1,58 @@
+﻿@using vidya.Web.DTOs.ActivationKeys
+@model IEnumerable<BoughtActivationKeysDTO>
+<div class="container mt-5">
+    <h2 class="mb-4">Bought Activation Keys</h2>
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info" role="alert">
+            You haven't bought any activation keys yet.
+        </div>
+    }
+    else
+    {
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Key</th>
+                    <th scope="col">Game</th>
+                    <th scope="col">Picture</th>
+                    <th scope="col">Locations</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var key in Model)
+                {
+                    <tr>
+                        <td>@key.Key</td>
+                        <td>@key.GameName</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(key.GamePicture))
+                            {
+                                <img src="@key.GamePicture" alt="@key.GameName" class="img-thumbnail" style="max-width: 100px;" />
+                            }
+                            else
+                            {
+                                <span class="text-muted">No Picture</span>
+                            }
+                        </td>
+                        <td>
+                            @if (key.Locations.Any())
+                            {
+                                <ul class="list-unstyled">
+                                    @foreach (var location in key.Locations)
+                                    {
+                                        <li>@location</li>
+                                    }
+                                </ul>
+                            }
+                            else
+                            {
+                                <span class="text-muted">No Locations</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
