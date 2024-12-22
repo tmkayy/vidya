@@ -40,7 +40,7 @@ namespace vidya.ThirdParty.Services.Payments
                         PriceData = new SessionLineItemPriceDataOptions
                         {
                             UnitAmountDecimal = CalculateDiscountedPrice(game),
-                            Currency = "usd",
+                            Currency = "bgn",
                             ProductData = new SessionLineItemPriceDataProductDataOptions
                             {
                                 Name = game.Name,
@@ -70,7 +70,7 @@ namespace vidya.ThirdParty.Services.Payments
 
         private decimal CalculateDiscountedPrice(Game game)
         {
-            decimal discountedPrice = game.Price;
+            decimal discountedPrice = game.Price * 100;
             if (game.Discount is not null && game.Discount.Percentage > 0)
             {
                 discountedPrice = (game.Price - (game.Price * game.Discount.Percentage / 100.0m)) * 100;

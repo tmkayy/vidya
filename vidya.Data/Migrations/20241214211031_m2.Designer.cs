@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using vidya.Data;
 
@@ -11,9 +12,11 @@ using vidya.Data;
 namespace vidya.Data.Migrations
 {
     [DbContext(typeof(VidyaDbContext))]
-    partial class VidyaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241214211031_m2")]
+    partial class m2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
